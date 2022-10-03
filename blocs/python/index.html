@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Python Enablement Software Description - OMI Doc</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../extra.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">OMI Doc</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../.." class="dropdown-item">Overview</a>
+</li>
+                                    
+<li>
+    <a href="../enablement/" class="dropdown-item">FMC+ ENABLEMENT Description</a>
+</li>
+                                    
+<li>
+    <a href="../fire/" class="dropdown-item">FIRE Host Side FPGA Description</a>
+</li>
+                                    
+<li>
+    <a href="../apollo/" class="dropdown-item">APOLLO Card (Host) Description</a>
+</li>
+                                    
+<li>
+    <a href="../ice/" class="dropdown-item">ICE Device Side FPGA Description</a>
+</li>
+                                    
+<li>
+    <a href="../gemini/" class="dropdown-item">GEMINI Card (Device) Description</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../misc/doc-guide/" class="dropdown-item">Document Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/OpenCAPI/omi-doc" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#python-enablement-software-description" class="nav-link">Python Enablement Software Description</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#architecture-details" class="nav-link">Architecture Details</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#requirements" class="nav-link">Requirements</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#general-preparation-and-settings" class="nav-link">General Preparation and Settings</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#adapter-card-mux-settings" class="nav-link">Adapter card Mux settings</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#initialize-device" class="nav-link">Initialize device</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#hostdevice-information" class="nav-link">Host/device information</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#reseting-device" class="nav-link">Reseting Device</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#read-a-hostdevice-register" class="nav-link">Read a host/device register:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#write-to-a-hostdevice-register" class="nav-link">Write to a host/device register:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#trigger-trainingsynchronisation-procedure" class="nav-link">Trigger training/synchronisation procedure:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#trigger-ddimm-configuration-procedure" class="nav-link">Trigger DDIMM Configuration procedure:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#to-check-ddimm-training-state" class="nav-link">To check DDIMM training state:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#examples-of-usage" class="nav-link">Examples of Usage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="python-enablement-software-description">Python Enablement Software Description</h1>
+<h2 id="architecture-details">Architecture Details</h2>
+<p>OMI enablement platform requires software to configure/synchronize/exercise the host and the DDIMMs modules.</p>
+<p>Initial development was performed using IBM's Cronus tool and can still be used if required.</p>
+<p>To ease the discovery of OMI technology, a simple python code has been developed.</p>
+<p>It can be run either on a external Raspberry pi, or any computer providing an I2C acces to the VCU128 card or on an internal Microblaze microprocessor (under development)</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>"click" and "smbus2" librairies are required.</li>
+<li>General knowledge of python configuration on chosen hardware/OS as well as I2C skills are required.</li>
+<li>Source code is available <a href="https://github.com/OpenCAPI/omi_enablement/tree/main/python">here</a></li>
+</ul>
+<h2 id="general-preparation-and-settings">General Preparation and Settings</h2>
+<p>This application is run from CLI (Command Line Interface) with Python3:</p>
+<pre><code>python3 omi.py --help
+</code></pre>
+
+<p>For a verbose display of any command, add the --log option just after omi.py</p>
+<pre><code>python3 omi.py --log yourcommand
+</code></pre>
+
+<p>With any command, the I2C bus can be provided with -b option. <strong>By default I2C bus is set to 3</strong> if not given.</p>
+<p>If you are using a different I2C bus number, the number should be passed like this:</p>
+<pre><code>python3 omi.py anycommand -b 1
+</code></pre>
+
+<p>You can scan the I2C bus with the command:</p>
+<pre><code>python3 omi.py scan -b 3
+</code></pre>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning !</p>
+<p>Code is provided as is, if unexpected I2C lanes hangs occur, a complete reset of Fire might be required</p>
+</div>
+<h2 id="adapter-card-mux-settings">Adapter card Mux settings</h2>
+<p>To be able to access a ddimm from I2C, muxes need to be configured:</p>
+<pre><code>python3 omi.py initpath -d ddimm  # ddimm : I2C selected DDIMM . Can be a,b,none.
+python3 omi.py initpath -d a
+python3 omi.py initpath -d b
+python3 omi.py initpath -d none
+</code></pre>
+
+<p>At any time, you can check the current path already set up with:</p>
+<pre><code>python3 omi.py checkpath
+</code></pre>
+
+<h2 id="initialize-device">Initialize device</h2>
+<p>Before using the following functions, use the following command to initialize the host,</p>
+<p>without it, i2c errors will be encountered:</p>
+<pre><code>python3 omi.py init
+</code></pre>
+
+<h2 id="hostdevice-information">Host/device information</h2>
+<p>To print out information about a chip, just do:</p>
+<pre><code>python3 omi.py info -c chip # chip: host/device name. Can be either &quot;fire&quot; or &quot;explorer&quot; (or &quot;ice&quot;)
+python3 omi.py info -c fire
+python3 omi.py info -c explorer
+python3 omi.py info -c ice
+</code></pre>
+
+<h2 id="reseting-device">Reseting Device</h2>
+<h3 id="change-reset-state-of-a-ddimm-or-multiple-ddimms-from-fire">Change reset state of a DDIMM or multiple DDIMMs from fire:</h3>
+<ul>
+<li><code>python3 omi.py ddimmreset -d ddimms -s newresetstate</code></li>
+</ul>
+<p>ddimms: letters of ddimms selected (Examples: abcdsw, ab, a)</p>
+<ul>
+<li>newresetstate: <strong>on</strong> to activate reset mode, <strong>off</strong> to quit reset mode</li>
+</ul>
+<h3 id="example">Example</h3>
+<pre><code>    python3 omi.py ddimmreset -d ab -s on
+</code></pre>
+
+<h2 id="read-a-hostdevice-register">Read a host/device register:</h2>
+<pre><code>python3 omi.py read -c chip -r regaddr
+</code></pre>
+
+<ul>
+<li>
+<p>chip: chip name. Can be either fire or explorer (or ice)</p>
+</li>
+<li>
+<p>regaddr: register address given in hex</p>
+</li>
+</ul>
+<pre><code>python3 omi.py read -c fire -r 0x100000000000004
+python3 omi.py read -c explorer -r 0x20b080
+python3 omi.py read -c explorer -r 0x8012811
+</code></pre>
+
+<h2 id="write-to-a-hostdevice-register">Write to a host/device register:</h2>
+<pre><code>python3 omi.py write -c chip -r regaddr -d data
+</code></pre>
+
+<ul>
+<li>chip: chip name. Can be either fire or explorer (or ice)</li>
+<li>regaddr: register address given in hex</li>
+<li>data: new value to write to the register, in hex</li>
+</ul>
+<pre><code>python3 omi.py write -c fire -r 0x100000000000004 -d 0x3f
+
+python3 omi.py write -c explorer -r 0x8012811 -d 0x5000000006f
+</code></pre>
+
+<h2 id="trigger-trainingsynchronisation-procedure">Trigger training/synchronisation procedure:</h2>
+<pre><code>  python3 omi.py sync -d ddimms
+</code></pre>
+
+<ul>
+<li>ddimms: letters of ddimms to sync (Examples: ab, b, a)</li>
+</ul>
+<p>!! This function commutes the muxes automatically to sync the ddims provided.</p>
+<p>!! Make sure to wait for about 20s after powering/resetting devices before launchig this command, </p>
+<p>!! otherwise it fails and needs to be re-executed.</p>
+<pre><code>python3 omi.py sync -d a
+python3 omi.py sync -d b
+python3 omi.py sync -d ab
+</code></pre>
+
+<h2 id="trigger-ddimm-configuration-procedure">Trigger DDIMM Configuration procedure:</h2>
+<pre><code>  python3 omi.py ddimmcfg -d ddimms
+</code></pre>
+
+<ul>
+<li>ddimms: letters of ddimms to sync (Examples: ab, b, a)</li>
+</ul>
+<p>This function will trigger a configuration process with Fire commands (Explorer will be accessed through In-band commands)
+No need to select the MUX path, as only Fire receives I2C commands.</p>
+<pre><code>python3 omi.py ddimmcfg -d a
+python3 omi.py ddimmcfg -d b
+python3 omi.py ddimmcfg -d ab
+</code></pre>
+
+<h2 id="to-check-ddimm-training-state">To check DDIMM training state:</h2>
+<pre><code>  python3 omi.py checksync -d ddimms
+</code></pre>
+
+<ul>
+<li>ddimms: letters of ddimms to sync check (Examples: ab, b, a)</li>
+</ul>
+<pre><code>python3 omi.py checksync -d a
+python3 omi.py checksync -d b
+python3 omi.py checksync -d ab
+</code></pre>
+
+<h2 id="examples-of-usage">Examples of Usage</h2>
+<pre><code>python3 omi.py initpath -d a
+python3 omi.py init
+python3 omi.py sync -d a
+python3 omi.py info -c explorer
+python3 omi.py checkpath
+pi@raspberrypi:~/python $ python3 omi.py initpath -d a
+pi@raspberrypi:~/python $ python3 omi.py init
+pi@raspberrypi:~/python $ python3 omi.py sync -d a
+----------         : Explorer Initialisation    ------------
+Explorer Firmware API version: 0x0f Ready
+Sync DDIMMA...
+----------        Explorer OMI Training Sequence ------------
+----------        Fire     OMI Training Sequence ------------
+DDIMMA sync Reg: 0x8000000000
+Training successfully done.
+pi@raspberrypi:~/python $ python3 omi.py ddimmcfg -d a
+Configuring DDIMMA...
+DDIMMA Configuration
+Memory Size : 64GB
+Vendor      : SMART
+Memory Size : 64GB
+Vendor      : SMART
+pi@raspberrypi:~/python $ python3 omi.py info -c explorer
+FW number of images: 0x2
+Partition ID: 0x41
+Major (Boot Partion A): 0x8
+Minor (Boot Partion A): 0x0
+Build patch (Boot Partion A): 0x0
+Build number (Boot Partion A): 0x6792a
+Build date (Boot Partion A): 0x2222021
+Major (Boot Partion B): 0x8
+Minor (Boot Partion B): 0x0
+Build patch (Boot Partion B): 0x0
+Build number (Boot Partion B): 0x6792a
+Build date (Boot Partion B): 0x2222021
+RAM size (in bytes): 0x40000
+Chip version: 0x20600d2
+SPI flash ID: 0xbb98
+SPI flash sector size: 0x10000
+SPI flash size: 0x1000000
+Error buffer size: 0x1000
+Image index: 0x0
+ECID: 0x1000000000000721a6d03b4f8759f0d4ed89300
+Entreprise Mode Status: 0x796
+Card ID: 0x3e00008
+EEPROM data: Reading 0x40c0a8529000800600003080b8000
+Memory Size : 32GB
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../extra.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Overview - OMI Doc</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="extra.css" rel="stylesheet">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">OMI Doc</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="." class="dropdown-item active">Overview</a>
+</li>
+                                    
+<li>
+    <a href="blocs/enablement/" class="dropdown-item">FMC+ ENABLEMENT Description</a>
+</li>
+                                    
+<li>
+    <a href="blocs/fire/" class="dropdown-item">FIRE Host Side FPGA Description</a>
+</li>
+                                    
+<li>
+    <a href="blocs/apollo/" class="dropdown-item">APOLLO Card (Host) Description</a>
+</li>
+                                    
+<li>
+    <a href="blocs/ice/" class="dropdown-item">ICE Device Side FPGA Description</a>
+</li>
+                                    
+<li>
+    <a href="blocs/gemini/" class="dropdown-item">GEMINI Card (Device) Description</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="misc/doc-guide/" class="dropdown-item">Document Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" class="nav-link disabled">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="blocs/enablement/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/OpenCAPI/omi-doc" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#omi-overview" class="nav-link">OMI Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#reference-documents-and-guides" class="nav-link">REFERENCE DOCUMENTS and GUIDES</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#fmc-omi-enablement-guide" class="nav-link">FMC+ OMI ENABLEMENT GUIDE</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#host-side-fpga-reference-design" class="nav-link">HOST SIDE FPGA REFERENCE DESIGN</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#device-side-fpga-reference-design" class="nav-link">DEVICE SIDE FPGA REFERENCE DESIGN</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#device-side-asic-reference-design" class="nav-link">DEVICE SIDE ASIC REFERENCE DESIGN</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><img alt="open-memory-interface-omi-wht" src="pictures/open-memory-interface-omi-wht.png" /></p>
+<h2 id="omi-overview"><strong>OMI Overview </strong></h2>
+<p><strong>OMI</strong>, stands for Open Memory Interface. </p>
+<p>Check OMI web site at <a href="https://openmemoryinterface.org/open-projects/">https://openmemoryinterface.org/open-projects/</a></p>
+<p>OMI is a highly tuned bus that was developed for near memory and is  easily migratable to emerging memory solutions (e.g., Storage Class  Memory). This serial coherent bus, a subset of <a href="https://opencapi.org/">OpenCAPI</a> (3.1 version), was architected specifically for the interface between a processor and  Near Memory having absolute minimum latency with significant bandwidth  and capacity. OMI is the solution to our evolving industry’s demand for Near Memory as data centers evolve from compute centric to becoming  data centric.</p>
+<p>Due to the smaller beachfront required by the OMI serial interface,  processors using OMI are able to support many more memory channels. For  example, IBM's Power10 is the first processor offering 1 Terabyte/s bandwidth on the memory side. The same bandwidth with external hardware is able to support up to 2 Petabytes of addressable memory.</p>
+<p>Thanks to the very low latency, this OMI near-memory connection brings plenty of new memory disaggregation possibilities. "Memory inception" for example, allows a process to borrow host memory from another server. "Pool of memories" can now be built to optimize the sharing of the most expensive resource of our servers.</p>
+<p>Using this CAPI/OpenCAPI technology associated with FPGAs has not only solved unbelievable bottlenecks, but has drastically decreased the power consumption of previous solutions.</p>
+<p>This Documentation site presents an overview of host and device chips as well as an enablement guide.</p>
+<ul>
+<li><a href="./blocs/fire">Fire host</a> design example</li>
+<li><a href="./blocs/ice">Ice device</a> design example</li>
+<li><a href="./blocs/gemini">Gemini device card</a> design example</li>
+<li><a href="./blocs/enablement">OMI Enablement Guide</a></li>
+</ul>
+<p>All the code and related materials are contributed to different Github repositories.</p>
+<h2 id="reference-documents-and-guides">REFERENCE DOCUMENTS and GUIDES</h2>
+<ul>
+<li>DDIMM PMICs information available in the JEDEC Standard Document <a href="https://www.jedec.org/standards-documents/docs/jesd301-1a">JESD301-1A</a></li>
+<li>DDIMM EEPROM content "JEDEC Publication No. 106BE : STANDARD MANUFACTURER’S IDENTIFICATION CODE" <a href="https://www.jedec.org/standards-documents/docs/jep-106ab">JEP106BE.pdf</a></li>
+</ul>
+<h2 id="fmc-omi-enablement-guide">FMC+ OMI ENABLEMENT GUIDE</h2>
+<ul>
+<li><a href="https://github.com/OpenCAPI/omi_enablement/">https://github.com/OpenCAPI/omi_enablement/</a> contains an example of host on a FMC+ board to evaluate DDMIMs modules</li>
+</ul>
+<h2 id="host-side-fpga-reference-design">HOST SIDE FPGA REFERENCE DESIGN</h2>
+<p><a href="https://github.com/OpenCAPI/omi_host_fire">https://github.com/OpenCAPI/omi_host_fire</a> contains a host FPGA reference design</p>
+<h2 id="device-side-fpga-reference-design">DEVICE SIDE FPGA REFERENCE DESIGN</h2>
+<p><a href="https://github.com/OpenCAPI/omi_device_ice">https://github.com/OpenCAPI/omi_device_ice</a> contains a device FPGA reference design</p>
+<h2 id="device-side-asic-reference-design">DEVICE SIDE ASIC REFERENCE DESIGN</h2>
+<p><a href="https://github.com/OpenCAPI/omi_asic_device_reference_design">https://github.com/OpenCAPI/omi_asic_device_reference_design</a> contains an ASIC device reference design</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="extra.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
