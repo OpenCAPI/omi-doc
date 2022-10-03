@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>FMC+ ENABLEMENT Description - OMI Doc</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../extra.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">OMI Doc</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../.." class="dropdown-item">Overview</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">FMC+ ENABLEMENT Description</a>
+</li>
+                                    
+<li>
+    <a href="../fire/" class="dropdown-item">FIRE Host Side FPGA Description</a>
+</li>
+                                    
+<li>
+    <a href="../apollo/" class="dropdown-item">APOLLO Card (Host) Description</a>
+</li>
+                                    
+<li>
+    <a href="../ice/" class="dropdown-item">ICE Device Side FPGA Description</a>
+</li>
+                                    
+<li>
+    <a href="../gemini/" class="dropdown-item">GEMINI Card (Device) Description</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Misc <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../misc/doc-guide/" class="dropdown-item">Document Guide</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../.." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../fire/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/OpenCAPI/omi-doc" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#omi-enablement-guide" class="nav-link">OMI ENABLEMENT Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#hardware-description" class="nav-link">HARDWARE DESCRIPTION</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#requirements" class="nav-link">REQUIREMENTS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#enablement-steps-with-an-external-i2c-master" class="nav-link">ENABLEMENT STEPS with an external I2C master</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#enablement-steps-with-internal-microblaze-as-i2c-master" class="nav-link">ENABLEMENT STEPS with internal Microblaze as I2C master</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="omi-enablement-guide">OMI ENABLEMENT Guide</h1>
+<h2 id="hardware-description">HARDWARE DESCRIPTION</h2>
+<p>For the purpose of open sourcing the design, a collaboration between OMI members led to a tuning of an OMIhost FPGA reference design "<a href="../fire/">Fire</a>" to be used in a <a href="https://www.xilinx.com/products/boards-and-kits/vcu128.htmlhttps://www.xilinx.com/products/boards-and-kits/vcu128.html">VCU128 Card</a> from AMD/Xilinx.</p>
+<p>With addition of a simple FMC+ connected add-on card, any OMI compatible memory DDIMM module can be evaluated.</p>
+<p><img alt="vcu_tormem_setup" src="../../pictures/vcu_tormem_setup.PNG" /></p>
+<p>The setup allows evaluation of 2 DDIMMs modules in slots A and B.</p>
+<p>Some code is required to synchronize and test the OMI DDIMMs.</p>
+<p>Enablement example codes have been developed in Python and in C. Same functions are available.</p>
+<p>Either the code is executed in a companion raspberry pi or any I2C capable computer, or even in an embedded microblaze processor (in the latter case use the C version as it executes much faster)</p>
+<p>Python source code is available at : <a href="https://github.com/OpenCAPI/omi_enablement/tree/main/python">Python Code</a></p>
+<p>Python code documentation is available at : <a href="../python">Python Documentation</a></p>
+<p>C source code is available at : <a href="https://github.com/OpenCAPI/omi_enablement/tree/main/c">C Code</a></p>
+<p>C code documentation is available at : <a href="../c_code">C Documentation</a></p>
+<p>Enablement example code</p>
+<ul>
+<li>Checks I2C tree</li>
+<li>Synchronizes DDIMMs</li>
+<li>Executes simple transfers in memory (not published yet)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note: The Raspberry pi can host an Cronus server, should you want to evaluate OMI in a Cronus environment.</p>
+</div>
+<h2 id="requirements">REQUIREMENTS</h2>
+<p>Requirements depends on what kind of experiments need to be conducted.</p>
+<ul>
+<li>Cronus with a raspberry pi hosting a Cronus server and dealing with I2C accesses (out of present scope)</li>
+<li>Standalone Python or C code running on Raspberry Pi or a PC with I2C capabilities</li>
+<li>Embedded PetaLinux with Microblaze next to Fire in the FPGA</li>
+<li>requires TFTP / NFS / DNS server to host boot and file system</li>
+<li>can run C standalone code (Python is too slow to execute in a timely manner)</li>
+<li>Standalone C code running on a no-OS Microblaze embedded processor (not developed yet)</li>
+<li>only requires a serial terminal (can be <a href="https://linux.die.net/man/8/picocom">"picocom"</a> using UART through programming USB cable)</li>
+</ul>
+<p>Minimum Hardware requirements :</p>
+<p>Procure the following:</p>
+<ul>
+<li>A VCU128 Board from <a href="https://www.xilinx.com/">AMD/Xilinx</a> and a JTAG controlling PC (can be the Raspberry pi)</li>
+<li>An adapter board from <a href="https://www.tormem.com/">Tormem</a>. </li>
+<li>as of today only V1 is available<ul>
+<li>Version 1 allows basic DDIMM interface</li>
+<li>Version 2 will also allow FIRE reset and power control of 12V, 3.3V and 1.8V.</li>
+</ul>
+</li>
+<li>At least one DDIMM module</li>
+<li>A USB relay card to ensure automated fire reset / 3.3V / 12V POWER control (if using an adapter board version 1)</li>
+</ul>
+<p>Software requirements : </p>
+<ul>
+<li>Obtain an AMD/Xilinx Licence for Vivado. Requires <strong>2018.3</strong> version for this contribution (best timing results at maximum bandwidth).</li>
+</ul>
+<p><img alt="dev_lab_example" src="../../pictures/dev_lab_example.PNG" /></p>
+<h2 id="enablement-steps-with-an-external-i2c-master">ENABLEMENT STEPS with an external I2C master</h2>
+<p>git clone the "<a href="https://github.com/opencapi/omi_host_fire/tree/vcu128_enablement">vcu128_enablement</a>" branch of Fire design. </p>
+<p>First synthetize, implement and generate bitstream of "FIRE" design for the VCU128 using the specific branch as specified in the README.md file.</p>
+<p>git clone the <a href="https://github.com/OpenCAPI/omi_enablement/">https://github.com/OpenCAPI/omi_enablement/</a> and use <code>/python</code> or <code>/c</code> directory with a debugging raspberry pi or any computer with I2C capability to check you can see the design.</p>
+<p>Choose Python or C control, both will send requests through the I2C bus to the Fire design. Explorer chip are usually access through In band commands are dealt by Fire.</p>
+<h2 id="enablement-steps-with-internal-microblaze-as-i2c-master">ENABLEMENT STEPS with internal Microblaze as I2C master</h2>
+<div class="admonition warning">
+<p class="admonition-title">When using Tormem adapter board version 1, I2C control by Microblaze requires a hacking of the VCU128 board as there is no provision to connect an external cable.</p>
+</div>
+<ol>
+<li>
+<p>git clone the "<a href="https://github.com/opencapi/omi_host_fire/tree/vcu128_enablement">vcu128_enablement</a>" branch of Fire design. </p>
+</li>
+<li>
+<p>First synthetize, implement and generate bitstream of "FIRE" design for the VCU128 using the specific branch as specified in the README.md file.</p>
+</li>
+<li>
+<p>To prepare the integration of FIRE and microblaze structure, generate an IP of Fire design.</p>
+</li>
+<li>
+<p>Git clone the "<a href="https://github.com/OpenCAPI/omi_enablement.git">omi_enablement</a>" to get the necessary material to build a {Fire + Microblaze} structure.</p>
+</li>
+<li>
+<p>Hardware: Option 1 : re-create your own design {FIRE + Microblaze}</p>
+</li>
+<li>
+<p>From the "hw/" directory, use hw_script.sh and tcl_code.tcl to generate a microblaze environment.
+      you'll be ask to provide the FIRE ip path from step 3.</p>
+</li>
+<li>you'll get the .xsa file which is the only file required for the remaining steps. It contains a complete description of the hardware.</li>
+<li>
+<p>Hardware Option 2: use pre-built hardware system.bit.</p>
+</li>
+<li>
+<p>Install <a href="https://www.xilinx.com/products/design-tools/embedded-software/petalinux-sdk.html">petalinux</a> (we used the 2021.1 version)</p>
+</li>
+<li>
+<p>Software Option 1: create your petalinux environment</p>
+</li>
+<li>
+<p>using petalinux-create, create a <code>vcuomi</code> project directory. <code>petalinux-create --type project --template microblaze --name vcuomi</code></p>
+</li>
+<li>remaining tasks: To Be described</li>
+<li>
+<p>...</p>
+</li>
+<li>
+<p>Software Option 2: Use pre_built linux</p>
+</li>
+<li>
+<p>Use https://github.com/OpenCAPI/omi_enablement/tree/main/petalinux content </p>
+</li>
+<li>
+<p>run the script.sh</p>
+</li>
+<li>
+<p>and then </p>
+<p>wsl@wsl:~/omi_enablement/petalinux$ petalinux-create --type project -s *.bsp</p>
+<p>wsl@wsl:~/omi_enablement/petalinux$ mkdir vcuomi/images &amp;&amp; mkdir vcuomi/images/linux</p>
+<p>wsl@wsl:~/omi_enablement/petalinux$ cp -r linux/images/* vcuomi/images/linux/.</p>
+</li>
+<li>
+<p>copy the <code>images/linux</code> content to your tftp directory of the remote computer acting as a server.</p>
+</li>
+<li>
+<p>From the remote tftp/NFS server: copy the tftp/rootfs.tar.gz directory to your NFS directory.</p>
+</li>
+<li>
+<p>Adjust permissions accordingly.</p>
+</li>
+<li>
+<p>From <code>petalinux</code> installation dir use <code>xsct -nolrwrap</code>  to load the system.bit into the fpga.</p>
+</li>
+<li>
+<p>open a picocom or any RS232 terminal on the FPGA RS232 link.</p>
+</li>
+<li>
+<p>trigger a boot of the microblaze with petalinux-boot.</p>
+</li>
+</ol></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../extra.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,37 @@
+site_name: OMI Doc
+repo_name: GitHub
+repo_url: https://github.com/OpenCAPI/omi-doc
+edit_uri: ""  
+
+nav:
+  - Home:
+          - 'Overview': 'index.md'
+          - 'FMC+ ENABLEMENT Description': 'blocs/enablement.md'
+          - 'FIRE Host Side FPGA Description': 'blocs/fire.md'
+          - 'APOLLO Card (Host) Description': 'blocs/apollo.md'
+          - 'ICE Device Side FPGA Description': 'blocs/ice.md'
+          - 'GEMINI Card (Device) Description': 'blocs/gemini.md'
+
+  - Misc:
+    - 'Document Guide': 'misc/doc-guide.md'
+theme:
+  name: mkdocs 
+# Code block colors: Dark
+#  hljs_style: hybrid
+#  hljs_style: monokai
+#  hljs_style: tomorrow-night
+#  hljs_style: railscasts
+# Code block colors: Light
+#  hljs_style: googlecode
+#  hljs_style: solarized-light
+  hljs_style: github
+#  hljs_style: foundation
+
+extra_css:
+  - extra.css
+
+extra_javascript:
+  - extra.js
+
+markdown_extensions:
+  - admonition
