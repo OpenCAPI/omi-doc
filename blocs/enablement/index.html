@@ -140,25 +140,27 @@
 <h2 id="introduction">INTRODUCTION</h2>
 <p>This guide will cover the steps to evaluate OMI using FIRE and EXPLORER designs.</p>
 <p>First thing is to setup hardware and software environments.</p>
-<p>Eventually go into some detials of the registers and memory space accesses.</p>
+<p>Eventually go into some details of the registers and memory space accesses.</p>
 <p>Finally use the system to get familiar with the OMI technology</p>
 <h2 id="setup">SETUP</h2>
-<p>This <a href="../enablement_setup/">enablement setup</a> page will presents hardware and software examples to allow proper evaluation of OMI.</p>
+<p>This <a href="../enablement_setup/">enablement setup</a> page will present hardware and software examples to allow proper evaluation of OMI.</p>
 <p>This step should allow you to read FIRE's ID register:</p>
 <p>It contains the git revision of the hardware build and few other information:</p>
 <p><code>python3 omi.py read -c fire -r 0x100000000000000</code>
 <code>Rd Fire Addr 0x100000000000000 : 0x000000003e29c7d2</code>       (This an example of git level)</p>
 <h2 id="omi-synchronisation">OMI synchronisation</h2>
-<p>Once FIRE is accessible and DDIM are powered up, we need to synchroize the OMI links.</p>
-<p>After power supplies set to ON and FIRE being reset cycled.</p>
+<p>Once FIRE is accessible and DDIM are powered up, we need to synchronize the OMI links.</p>
+<p>After power supplies are set to ON and FIRE being reset cycled.</p>
 <p>This is simply achieved with the following python commands:</p>
 <pre><code>python3 omi.py initpath -d a; python3 omi.py init; python3 omi.py sync -d a
 python3 omi.py initpath -d b; python3 omi.py init; python3 omi.py sync -d b
 </code></pre>
 
 <h2 id="omi-configuration-and-tests">OMI CONFIGURATION AND TESTS</h2>
-<p>Once OMI links are set the latest step consists in configuring the Explorer to provide access to its local DDIMM memory.</p>
-<p>python3 omi.py ddimmcfg -d a</p>
+<p>Once OMI links are set, the latest step consists in configuring the EXPLORER chip to provide access its local DDIMM memory.</p>
+<pre><code>python3 omi.py ddimmcfg -d a
+</code></pre>
+
 <p>Once this is done, FBIST and C3S tests can be run.</p>
 <h3 id="fbist-tests">FBIST TESTS</h3>
 <p>... working on it ...</p>
