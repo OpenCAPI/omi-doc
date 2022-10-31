@@ -1,138 +1,133 @@
 # OMI ENABLEMENT Guide
 
-## HARDWARE DESCRIPTION
+## INTRODUCTION
 
-For the purpose of open sourcing the design, a collaboration between OMI members led to a tuning of an OMIhost FPGA reference design "[Fire](../fire/)" to be used in a [VCU128 Card] from AMD/Xilinx.
+This guide will cover the steps to evaluate OMI using FIRE and EXPLORER designs.
 
-[VCU128 Card]: https://www.xilinx.com/products/boards-and-kits/vcu128.htmlhttps://www.xilinx.com/products/boards-and-kits/vcu128.html
+First thing is to setup hardware and software environments.
 
-With addition of a simple FMC+ connected add-on card, any OMI compatible memory DDIMM module can be evaluated.
+Eventually go into some details of the registers and memory space accesses.
 
-![vcu_tormem_setup](../pictures/vcu_tormem_setup.PNG)
+Finally use the system to get familiar with the OMI technology
 
-The setup allows evaluation of 2 DDIMMs modules in slots A and B.
+## SETUP
 
-Some code is required to synchronize and test the OMI DDIMMs.
+This [enablement setup](./enablement_setup.md) page will present hardware and software examples to allow proper evaluation of OMI.
 
-Enablement example codes have been developed in Python and in C. Same functions are available.
+This step should allow you to read FIRE's ID register:
 
-Either the code is executed in a companion raspberry pi or any I2C capable computer, or even in an embedded microblaze processor (in the latter case use the C version as it executes much faster)
+It contains the git revision of the hardware build and few other information:
 
-Python source code is available at : [Python Code]
+`python3 omi.py read -c fire -r 0x100000000000000`
+`Rd Fire Addr 0x100000000000000 : 0x000000003e29c7d2`       (This an example of git level)
 
-[Python Code]:https://github.com/OpenCAPI/omi_enablement/tree/main/python
+## OMI synchronisation
 
-Python code documentation is available at : [Python Documentation]
+Once FIRE is accessible and DDIM are powered up, we need to synchronize the OMI links.
 
-[Python Documentation]:../python
+After power supplies are set to ON and FIRE being reset cycled.
 
-C source code is available at : [C Code]
+This is simply achieved with the following python commands for DDIMMA, A or both:
 
-[C Code]:https://github.com/OpenCAPI/omi_enablement/tree/main/c
+```
+python3 omi.py initpath -d a; python3 omi.py init; python3 omi.py sync -d a
+python3 omi.py initpath -d b; python3 omi.py init; python3 omi.py sync -d b
+python3 omi.py initpath -d a; python3 omi.py init; python3 omi.py initpath -d b; python3 omi.py init; python3 omi.py sync -d ab
+```
 
-C code documentation is available at : [C Documentation]
+## OMI CONFIGURATION AND TESTS
 
-[C Documentation]:../c_code
+Once OMI links are set, the latest step consists in configuring the EXPLORER chip to provide access to its local DDIMM memory.
 
-Enablement example code
+```
+python3 omi.py ddimmcfg -d a
+```
 
-- Checks I2C tree
-- Synchronizes DDIMMs
-- Executes simple transfers in memory (not published yet)
+Once this is done, FBIST and C3S tests can be run.
 
-!!! Note    "Note: The Raspberry pi can host an Cronus server, should you want to evaluate OMI in a Cronus environment."
+### FBIST TESTS
 
-## REQUIREMENTS
+The following routines allow users to experiment with embedded fbist generators to write/read data into DDIMMs and evaluate performances.
 
-Requirements depends on what kind of experiments need to be conducted.
+!!! Note    " The reference design is aimed at mainly providing mecanisms, it has not been optimized for performance"
 
-- Cronus with a raspberry pi hosting a Cronus server and dealing with I2C accesses (out of present scope)
-- Standalone Python or C code running on Raspberry Pi or a PC with I2C capabilities
-- Embedded PetaLinux with Microblaze next to Fire in the FPGA
-  - requires TFTP / NFS / DNS server to host boot and file system
-  - can run C standalone code (Python is too slow to execute in a timely manner)
-- Standalone C code running on a no-OS Microblaze embedded processor (not developed yet)
-  - only requires a serial terminal (can be ["picocom"](https://linux.die.net/man/8/picocom) using UART through programming USB cable)
+```
+$ python3 omi.py fbistcfg -d a
+
+======================================================
+
+-------------------Start FBIST procedure -------------
+
+#=============================
+ Commands configuration for DDIMM located in port a
+
+>> Number of Engines to enable ? (Type 1 to 8): 1
+>> Number of Bytes to test access? (Type 2 for 64B and 4 for 128B): 2
+>> Number of cycles between flits (from FF to 0, typical is 0): FF
+>>                                                    
+>> FBIST_POOL_0_ENGINE_x - 0x02= 64B WR + 0x01=@Incremental address
+>> Spacing of 255 cycles between Flits
+>> Data pattern is 0x0 : Data Equals Address
+>>                                                    
+>>  -- 6 secs run - please wait --
+
+-------------------------
+
+Errors     :  no errors found 
+Run Time   : 6.03 sec
+Latency E0 : 0.22 secs   <<== only one generator was chosen
+Latency E1 : 0.00 secs
+Latency E2 : 0.00 secs
+Latency E3 : 0.00 secs
+Latency E4 : 0.00 secs
+Latency E5 : 0.00 secs
+Latency E6 : 0.00 secs
+Latency E7 : 0.00 secs
+Sum of lat : 0.22 secs
+Total WR   : 980674
+nb 32B wr  : 1961348
+Access is  : WRITE 64 Bytes
+freq       : 333 MHz
+Avg Wr lat : 220.22 ns
+
+Throughput : 0.01 GBps
+
+Type 'q' to quit or any key to continue with Read fbist procedure
+```
 
 
 
-Minimum Hardware requirements :
+### C3S TESTS
 
-Procure the following:
+... working on it ...
 
-- A VCU128 Board from [AMD/Xilinx](https://www.xilinx.com/) and a JTAG controlling PC (can be the Raspberry pi)
-- An adapter board from [Tormem](https://www.tormem.com/). 
-  - as of today only V1 is available
-    - Version 1 allows basic DDIMM interface
-    - Version 2 will also allow FIRE reset and power control of 12V, 3.3V and 1.8V.
-- At least one DDIMM module
-- A USB relay card to ensure automated fire reset / 3.3V / 12V POWER control (if using an adapter board version 1)
+## Firmware checking
 
-Software requirements : 
+### Check or update firmware level 
 
-- Obtain an AMD/Xilinx Licence for Vivado. Requires **2018.3** version for this contribution (best timing results at maximum bandwidth).
+Using info option will provide the revision in hexa and decimal format.
 
-![dev_lab_example](../pictures/dev_lab_example.PNG)
+```
+python3 omi.py info -c exp
+...
+Build number (Boot Partition A) : 0x6c92a - 444714
+...
+```
 
-## ENABLEMENT STEPS with an external I2C master
+Get latest firmware there:[https://github.com/open-power/ocmb-explorer-fw/releases](https://github.com/open-power/ocmb-explorer-fw/releases)
 
-git clone the "[vcu128_enablement](https://github.com/opencapi/omi_host_fire/tree/vcu128_enablement)" branch of Fire design. 
+[https://github.com/open-power/ocmb-explorer-fw/releases]: (https://github.com/open-power/ocmb-explorer-fw/releases)
 
-First synthetize, implement and generate bitstream of "FIRE" design for the VCU128 using the specific branch as specified in the README.md file.
+For example if 444714 is the latest fimware:
 
-git clone the [https://github.com/OpenCAPI/omi_enablement/](https://github.com/OpenCAPI/omi_enablement/) and use `/python` or `/c` directory with a debugging raspberry pi or any computer with I2C capability to check you can see the design.
+1. unzip the FW444714BinaryOnly.zip
+2. `cp signed_app_fw.mem <your python directory>/CL444714.bin`
+3. edit firmware_update.py replacing "<release\>.bin" by CL444714.bin
+4. then use this command  to update the fimware: `python3 firmware_update.py`
+5. at the end, check with ``python3 omi.py info -c exp` that the firmware partition B has the required level, ready to become the used firmware after next resets.
+6. Reset the card and allow the firmware to be updated
+7. finally check the "info" to confirm proper update.
 
-Choose Python or C control, both will send requests through the I2C bus to the Fire design. Explorer chip are usually access through In band commands are dealt by Fire.
 
-## ENABLEMENT STEPS with internal Microblaze as I2C master
 
-!!! Warning    "When using Tormem adapter board version 1, I2C control by Microblaze requires a hacking of the VCU128 board as there is no provision to connect an external cable."
-
-1. git clone the "[vcu128_enablement](https://github.com/opencapi/omi_host_fire/tree/vcu128_enablement)" branch of Fire design. 
-
-2. First synthetize, implement and generate bitstream of "FIRE" design for the VCU128 using the specific branch as specified in the README.md file.
-
-3. To prepare the integration of FIRE and microblaze structure, generate an IP of Fire design.
-
-4. Git clone the "[omi_enablement](https://github.com/OpenCAPI/omi_enablement.git)" to get the necessary material to build a {Fire + Microblaze} structure.
-
-5. Hardware: Option 1 : re-create your own design {FIRE + Microblaze}
-
-   1. From the "hw/" directory, use hw_script.sh and tcl_code.tcl to generate a microblaze environment.
-      you'll be ask to provide the FIRE ip path from step 3.
-   2. you'll get the .xsa file which is the only file required for the remaining steps. It contains a complete description of the hardware.
-   3. Hardware Option 2: use pre-built hardware system.bit.
-
-6. Install [petalinux](https://www.xilinx.com/products/design-tools/embedded-software/petalinux-sdk.html) (we used the 2021.1 version)
-
-7. Software Option 1: create your petalinux environment
-
-   1. using petalinux-create, create a `vcuomi` project directory. `petalinux-create --type project --template microblaze --name vcuomi`
-   2. remaining tasks: To Be described
-   3. ...
-
-8. Software Option 2: Use pre_built linux
-
-   1. Use https://github.com/OpenCAPI/omi_enablement/tree/main/petalinux content 
-
-   2. run the script.sh
-
-   3.  and then 
-
-      wsl@wsl:~/omi_enablement/petalinux$ petalinux-create --type project -s \*.bsp
-
-      wsl@wsl:~/omi_enablement/petalinux$ mkdir vcuomi/images && mkdir vcuomi/images/linux
-
-      wsl@wsl:~/omi_enablement/petalinux$ cp -r linux/images/\* vcuomi/images/linux/.
-
-9. copy the `images/linux` content to your tftp directory of the remote computer acting as a server.
-
-10. From the remote tftp/NFS server: copy the tftp/rootfs.tar.gz directory to your NFS directory.
-
-11. Adjust permissions accordingly.
-
-12. From `petalinux` installation dir use `xsct -nolrwrap`  to load the system.bit into the fpga.
-
-13. open a picocom or any RS232 terminal on the FPGA RS232 link.
-
-14. trigger a boot of the microblaze with petalinux-boot.
+Go back to the [enablement](./enablement.md) page
