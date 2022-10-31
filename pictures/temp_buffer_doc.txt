@@ -1,35 +1,37 @@
-i.	Read FIRE_VERSION at @0x00 of FML register 
-	python3 omi.py read -c fire -r 0x100000000000000
-Rd Fire Addr 0x100000000000000 : 0x000000003e29c7d2
-This register contains
-- [31:29]: ‘001’:  frequency used for the internal clock of the FPGA which determines the OMI link frequency [ 1= 21.33 GBPS, 2 =23.46 GBPS, 3=25.6 GBPS]
-- [28]: ‘1’: dirty bit is used when the current image contains change not committed to the git version control
-- [27:0]: ‘29c7d2’ is the git level of the code
+$ python3 omi.py fbistcfg -d a
 
+======================================================
+-------------------Start FBIST procedure -------------
+======================================================
 
-ii.	Reset the DDIMM0 device
-python3 omi.py read -c fire -r 0x100000000000004
-
-Rd Fire Addr 0x100000000000004 : 0x000000000000003f 
-Reset the DDIMM0 (bit3)
-python3 omi.py write -c fire -r 0x100000000000004 -d 000000037
-Wr Fire Addr 0x100000000000004 : 0x0000000000000037
-Writing check : Success
-
-python3 omi.py write -c fire -r 0x100000000000004 -d 000000037
-Wr Fire Addr 0x100000000000004 : 0x000000000000003f
-Writing check : Success
-
-iii.	Bad address access
-As soon as a bad i2C address is accessed, you may encounter one of the 2 different types of answer (with different severity):
-The answer “dec0de1c” will be sent as an answer of an unknown address if the range of address is unknown
-python3 omi.py read -c fire -r 0x1000F0000000004                                                    Rd Fire Addr 0x1000f0000000004 : 0x00000000dec0de1c
-
-an I2C error will be raised, and a reset of the fire chip will be needed if you access a bad address in unallowed range!
-python3 omi.py read -c fire -r 0x10000000000FADA
-OSError: [Errno 5] Input/output error
-
-~/vcu128_ctl_sh/i2c_reset.sh
-
-Watch out non 32bits aligned addresses also fail: like 0x100000000000001
-
+#=============================
+ Commands configuration for DDIMM located in port a
+>> Number of Engines to enable ? (Type 1 to 8): 1
+>> Number of Bytes to test access? (Type 2 for 64B and 4 for 128B): 2
+>> Number of cycles between flits (from FF to 0, typical is 0): FF
+>>                                                       
+>> FBIST_POOL_0_ENGINE_x - 0x02= 64B WR + 0x01=@Incremental address
+>> Spacing of 255 cycles between Flits
+>> Data pattern is 0x0 : Data Equals Address
+>>                                                       
+ -- 6 secs run - please wait --
+-------------------------
+Errors     :  no errors found 
+Run Time   : 6.03 sec
+Latency E0 : 0.22 secs
+Latency E1 : 0.00 secs
+Latency E2 : 0.00 secs
+Latency E3 : 0.00 secs
+Latency E4 : 0.00 secs
+Latency E5 : 0.00 secs
+Latency E6 : 0.00 secs
+Latency E7 : 0.00 secs
+Sum of lat : 0.22 secs
+Total WR   : 980674
+nb 32B wr  : 1961348
+Access is  : WRITE 64 Bytes
+freq       : 333 MHz
+Avg Wr lat : 220.22 ns
+Throughput : 0.01 GBps
+-------------------------
+>> Type 'q' to quit or any key to continue with Read fbist procedure

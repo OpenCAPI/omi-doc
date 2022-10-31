@@ -129,6 +129,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#firmware-checking" class="nav-link">Firmware checking</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -151,21 +155,89 @@
 <h2 id="omi-synchronisation">OMI synchronisation</h2>
 <p>Once FIRE is accessible and DDIM are powered up, we need to synchronize the OMI links.</p>
 <p>After power supplies are set to ON and FIRE being reset cycled.</p>
-<p>This is simply achieved with the following python commands:</p>
+<p>This is simply achieved with the following python commands for DDIMMA, A or both:</p>
 <pre><code>python3 omi.py initpath -d a; python3 omi.py init; python3 omi.py sync -d a
 python3 omi.py initpath -d b; python3 omi.py init; python3 omi.py sync -d b
+python3 omi.py initpath -d a; python3 omi.py init; python3 omi.py initpath -d b; python3 omi.py init; python3 omi.py sync -d ab
 </code></pre>
 
 <h2 id="omi-configuration-and-tests">OMI CONFIGURATION AND TESTS</h2>
-<p>Once OMI links are set, the latest step consists in configuring the EXPLORER chip to provide access its local DDIMM memory.</p>
+<p>Once OMI links are set, the latest step consists in configuring the EXPLORER chip to provide access to its local DDIMM memory.</p>
 <pre><code>python3 omi.py ddimmcfg -d a
 </code></pre>
 
 <p>Once this is done, FBIST and C3S tests can be run.</p>
 <h3 id="fbist-tests">FBIST TESTS</h3>
-<p>... working on it ...</p>
+<p>The following routines allow users to experiment with embedded fbist generators to write/read data into DDIMMs and evaluate performances.</p>
+<div class="admonition note">
+<p class="admonition-title"> The reference design is aimed at mainly providing mecanisms, it has not been optimized for performance</p>
+</div>
+<pre><code>$ python3 omi.py fbistcfg -d a
+
+======================================================
+
+-------------------Start FBIST procedure -------------
+
+#=============================
+ Commands configuration for DDIMM located in port a
+
+&gt;&gt; Number of Engines to enable ? (Type 1 to 8): 1
+&gt;&gt; Number of Bytes to test access? (Type 2 for 64B and 4 for 128B): 2
+&gt;&gt; Number of cycles between flits (from FF to 0, typical is 0): FF
+&gt;&gt;                                                    
+&gt;&gt; FBIST_POOL_0_ENGINE_x - 0x02= 64B WR + 0x01=@Incremental address
+&gt;&gt; Spacing of 255 cycles between Flits
+&gt;&gt; Data pattern is 0x0 : Data Equals Address
+&gt;&gt;                                                    
+&gt;&gt;  -- 6 secs run - please wait --
+
+-------------------------
+
+Errors     :  no errors found 
+Run Time   : 6.03 sec
+Latency E0 : 0.22 secs   &lt;&lt;== only one generator was chosen
+Latency E1 : 0.00 secs
+Latency E2 : 0.00 secs
+Latency E3 : 0.00 secs
+Latency E4 : 0.00 secs
+Latency E5 : 0.00 secs
+Latency E6 : 0.00 secs
+Latency E7 : 0.00 secs
+Sum of lat : 0.22 secs
+Total WR   : 980674
+nb 32B wr  : 1961348
+Access is  : WRITE 64 Bytes
+freq       : 333 MHz
+Avg Wr lat : 220.22 ns
+
+Throughput : 0.01 GBps
+
+Type 'q' to quit or any key to continue with Read fbist procedure
+</code></pre>
+
 <h3 id="c3s-tests">C3S TESTS</h3>
-<p>... working on it ...</p></div>
+<p>... working on it ...</p>
+<h2 id="firmware-checking">Firmware checking</h2>
+<h3 id="check-or-update-firmware-level">Check or update firmware level</h3>
+<p>Using info option will provide the revision in hexa and decimal format.</p>
+<pre><code>python3 omi.py info -c exp
+...
+Build number (Boot Partition A) : 0x6c92a - 444714
+...
+</code></pre>
+
+<p>Get latest firmware there:<a href="https://github.com/open-power/ocmb-explorer-fw/releases">https://github.com/open-power/ocmb-explorer-fw/releases</a></p>
+<p>For example if 444714 is the latest fimware:</p>
+<ol>
+<li>unzip the FW444714BinaryOnly.zip</li>
+<li><code>cp signed_app_fw.mem &lt;your python directory&gt;/CL444714.bin</code></li>
+<li>edit firmware_update.py replacing "&lt;release>.bin" by CL444714.bin</li>
+<li>then use this command  to update the fimware: <code>python3 firmware_update.py</code></li>
+<li>at the end, check with <code>`python3 omi.py info -c exp</code> that the firmware partition B has the required level, ready to become the used firmware after next resets.</li>
+<li>Reset the card and allow the firmware to be updated</li>
+<li>finally check the "info" to confirm proper update.</li>
+</ol>
+<p>Go back to the <a href="./">enablement</a> page</p></div>
             </div>
         </div>
 
