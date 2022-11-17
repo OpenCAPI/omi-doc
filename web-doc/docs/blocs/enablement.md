@@ -23,7 +23,7 @@ It contains the git revision of the hardware build and few other information:
 
 ## OMI synchronisation
 
-Once FIRE is accessible and DDIM are powered up, we need to synchronize the OMI links.
+Once FIRE is accessible and DDIMM are powered up, we need to synchronize the OMI links.
 
 After power supplies are set to ON and FIRE being reset cycled.
 
@@ -130,4 +130,4 @@ For example if 444714 is the latest fimware:
 
 
 
-Go back to the [enablement](./enablement.md) page
+Go back to the [Home](../..) page

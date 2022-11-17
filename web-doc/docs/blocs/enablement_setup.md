@@ -76,7 +76,7 @@ Software requirements :
 
 ## ENABLEMENT STEPS with an external I2C master
 
-git clone the "[vcu128_enablement](https://github.com/opencapi/omi_host_fire/)" repository of Fire design. 
+git clone the "[Host FIRE](https://github.com/opencapi/omi_host_fire/)" repository of Fire design. 
 
 First synthetize, implement and generate bitstream of "FIRE" design for the VCU128 using the specific branch as specified in the README.md file.
 
@@ -88,7 +88,7 @@ Choose Python or C control, both will send requests through the I2C bus to the F
 
 !!! Warning    "When using Tormem adapter board version 1, I2C control by Microblaze requires a hacking of the VCU128 board as there is no provision to connect an external cable."
 
-1. git clone the "[vcu128_enablement](https://github.com/opencapi/omi_host_fire/)" repository of Fire design. 
+1. git clone the "[Host FIRE](https://github.com/opencapi/omi_host_fire/)" repository of Fire design. 
 
 2. First synthetize, implement and generate bitstream of "FIRE" design for the VCU128 using the specific branch as specified in the README.md file.
 
